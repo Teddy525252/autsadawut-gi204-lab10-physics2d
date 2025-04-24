@@ -5,6 +5,8 @@ using UnityEngine.Rendering.Universal;
 public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D rb2d;
+    
+    Vector2 moveInput; //for walk with addforce
 
     //Walk
     private float move;
@@ -21,10 +23,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        //Walk left-right
-        move = Input.GetAxis("Horizontal");
+        //Walk with addforce
+        moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        rb2d.AddForce(moveInput * speed );
         
-        rb2d.linearVelocity = new Vector2(move * speed, rb2d.linearVelocity.y);
         
         //Jump
         if (Input.GetButtonDown("Jump") && !isJumping)
